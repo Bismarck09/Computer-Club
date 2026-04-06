@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsMovement)
             Move();
         else
-            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.linearVelocity = Vector3.zero;
     }
 
     private void Move()
@@ -31,6 +31,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = IsInverseMovement ? moveInverseDirection : moveUsualDirection;
 
         transform.LookAt(transform.position + moveDirection);
-        _rigidbody.velocity = moveDirection * _speed;
+        _rigidbody.linearVelocity = moveDirection * _speed;
     }
 }

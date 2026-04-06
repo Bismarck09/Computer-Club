@@ -1,11 +1,14 @@
 using UnityEngine;
+using System.Collections;
 
 public class DistributionVisitors : MonoBehaviour
 {
     [SerializeField] private PlayTimePayment _playTimePayment;
+    [SerializeField] private float _delayTime;
 
     private SearchFreeComputer _searchFreeComputer;
     private VisitorMovement _visitorMovement;
+    private FreeComputers _computer;
 
     private void Awake()
     {
@@ -14,21 +17,25 @@ public class DistributionVisitors : MonoBehaviour
 
     public void Distribute(VisitorChoise visitor)
     {
-        FreeComputers computer = _searchFreeComputer.Find();
-
+        _computer = _searchFreeComputer.Find();
         _visitorMovement = visitor.GetComponent<VisitorMovement>();
 
-        if (computer != null)
+        if (_computer != null)
         {
-            _visitorMovement.Move(computer.GetTargetToMove());
-            AssignComputerForVisitor(visitor, computer);
+            StartCoroutine(DistributeCoroutine(visitor));
+            
+        }
 
-            _playTimePayment.Pay(computer.GetComponent<Computer>().PriceForHour);
-        }
-        else
-        {
-            _visitorMovement.GetComponent<LeavingClub>().Leave();
-        }
+    }
+
+    private IEnumerator DistributeCoroutine(VisitorChoise visitor)
+    {
+        yield return new WaitForSeconds(_delayTime);
+
+        _visitorMovement.Move(_computer.GetTargetToMove());
+        AssignComputerForVisitor(visitor, _computer);
+
+        _playTimePayment.Pay(_computer.GetComponent<Computer>().PriceForHour);
     }
 
     private void AssignComputerForVisitor(VisitorChoise visitor, FreeComputers computer)
