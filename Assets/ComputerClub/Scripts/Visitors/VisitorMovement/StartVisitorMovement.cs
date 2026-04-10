@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class StartVisitorMovement : MonoBehaviour
 {
-    [SerializeField] private Vector3 _target;
-
+    private AdminQueue _adminQueue;
     private VisitorMovement _visitorMovement;
 
-    private void Awake()
+    public void Init(AdminQueue adminQueue)
     {
+        _adminQueue = adminQueue;
         _visitorMovement = GetComponent<VisitorMovement>();
+
         StartMove();
     }
 
     private void StartMove()
     {
-        _visitorMovement.Move(_target);
+        if (_adminQueue.HasFreeSlot())
+            _adminQueue.AddToQueue(GetComponent<Visitor>());
+        else
+            _visitorMovement.GetComponent<LeavingClub>().Leave();
     }
 }

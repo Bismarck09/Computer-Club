@@ -7,8 +7,7 @@ public class PaymentForInteriorObject : MonoBehaviour
     [SerializeField] private InteriorObject _interiorObject;
     [SerializeField] private CoinsStorage _coins;
     [SerializeField] private PriceOfObject _priceOfObject;
-    [SerializeField] private Rating _rating;
-    [SerializeField] private float _numberOfRating;
+
 
     private PaymentForNeonlightText _paymentForNeonlightText;
 
@@ -98,7 +97,7 @@ public class PaymentForInteriorObject : MonoBehaviour
             _coins.RemoveCoin(_currentPaymentAmount);
 
             _interiorObject.EnableInteriorObject();
-            _rating.ChangeRating(_numberOfRating);
+
 
             gameObject.SetActive(false);
         }

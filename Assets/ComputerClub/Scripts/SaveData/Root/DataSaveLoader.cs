@@ -33,6 +33,7 @@ public class DataSaveLoader : MonoBehaviour
 
         Repository.SaveState();
         PlayerPrefs.SetInt("firstOpen", 1);
+        PlayerPrefs.DeleteAll();
     }
 
     private void LoadData()

@@ -24,6 +24,19 @@ public class Interior : MonoBehaviour
         return _interiorObjects;
     }
 
+    public float GetCurrentInteriorBonus()
+    {
+        float bonus = 1;
+
+        for (int i = 0; i < _interiorObjects.Length; i++)
+        {
+            if (_interiorObjects[i].IsPurchased)
+                bonus += _interiorObjects[i].Bonus;
+        }
+
+        return bonus;
+    }
+
     public void Init(InteriorData interiorData)
     {
         if (interiorData.IsPurchased == true)
